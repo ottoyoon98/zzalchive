@@ -1,5 +1,5 @@
 import { NodeNextRequest } from "next/dist/server/base-http/node";
-
+import {useState, useEffect} from 'react'
 export function Item({imgSrc}){
     return (
         <div className='zzal'>
@@ -44,25 +44,41 @@ export default function zzal_frame(){
         "https://i.pinimg.com/originals/98/c8/cd/98c8cdb6cdb0978c4a4ef4bb59b5afb3.jpg",
         "https://mblogthumb-phinf.pstatic.net/MjAyMTAyMjdfMjUw/MDAxNjE0NDA1MTY3NTAx.u6ysHq7AaSVDZuph7rHVQUyl9s1eX9U_tAmylfB6HVcg.BgGifUcHOhYs0aulPEYS18nrBStJWLLGYHIaAyiyjGgg.JPEG.letyourselfglow/IMG_4400.jpg?type=w800",
         "https://pbs.twimg.com/media/E8mCs2EUYAssvTy.jpg"];
-    return (
         
+    const idxs = [0, 1, 2, 3];    
+    const [verticals, setVerticals] = useState(1);
+    const [winWidth, setWinWidth] = useState(undefined);
+    useEffect(()=>{
+        if(winWidth!=="undefined"){
+            if(winWidth < 720){
+                setVerticals(1);
+            } else if(winWidth < 1080){
+                setVerticals(2);
+            } else {
+                setVerticals(3);
+            }
+            console.log(verticals);
+        }
+    },[winWidth])
+    useEffect(()=>{
+        if(typeof window !== "undefined"){
+            function handleResize(){
+                setWinWidth(window.innerWidth);
+            }
+        }
+        window.addEventListener("resize",handleResize);
+        handleResize();
+        return ()=> window.removeEventListener("resize",handleResize);
+    }, []);
+    return (
         <div className="zzals">
-            <div className='vertical'>
-                {urlList.filter(function(value, index) {
-                    return (index % 3)===0?value:null;
-                }).map((arg) => <Item imgSrc={arg} />)}
-            </div>
-            <div className='vertical'>
-                {urlList.filter(function(value, index) {
-                    return (index % 3)===1?value:null;
-                }).map((arg) => <Item imgSrc={arg} />)}
-            </div>
-            <div className='vertical'>
-                {urlList.filter(function(value, index) {
-                    return (index % 3)===2?value:null;
-                }).map((arg) => <Item imgSrc={arg} />)}
-            </div>
-            
+            {idxs.slice(0, verticals).map((idx)=>
+                <div className='vertical' key={idx}>
+                    {urlList.filter(function(value, index) {
+                        return (index % verticals)===idx?value:null;
+                    }).map((item) => <Item imgSrc={item} key={item}/>)}
+                </div>
+            )}
             <style jsx>{`
                .zzals{
                     margin-top: 30px;

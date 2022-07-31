@@ -1,7 +1,7 @@
-import {useRouter} from 'next/router'
-import Image from 'next/image'
 import Zzals from '../components/zzal_frame'
 import SearchForm from '../components/search_form'
+import {useRouter} from 'next/router'
+
 export default function search(){
     const router = useRouter();
     console.log(router);
@@ -9,7 +9,7 @@ export default function search(){
     return (
         <div className='search-page'>
             <SearchForm searching_query={router.query.search}/>
-            <Zzals />
+            <Zzals verticals={2}/>
             <style jsx>{`
                 .search-page{
                     justify-content:center;
