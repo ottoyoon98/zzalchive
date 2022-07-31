@@ -1,8 +1,29 @@
+import {useRouter} from 'next/router';
+import {useState, useEffect} from 'react'
 export default function SearchForm({searching_query}){
+    const router = useRouter()
+    const [query, setQuery] = useState(searching_query);
+    const onChange = (event) => {
+        setQuery(event.target.value);
+    }
+    const onSubmit = ((event) => {
+        event.preventDefault();
+        router.push({
+            pathname: "/search",
+            query: {search: query},
+        });
+    })
     return (
-        <form action="/search">
-            <label for="search" className="sr-only">search</label>
-            <input type="text" id="search" autocomplete="off" name="search" placeholder="Type some keywords for searching zzal." value={searching_query}>
+        <form onSubmit={onSubmit}>
+            <label htmlFor="search" className="sr-only">search</label>
+            <input 
+                type="text" 
+                id="search"
+                autoComplete="off"
+                name="search"
+                placeholder="Type some keywords for searching zzal."
+                value={query}
+                onChange={onChange} >
             </input>
             <button>
                 <svg viewBox="0 0 20 20">
