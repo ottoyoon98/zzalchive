@@ -17,14 +17,19 @@ export default function Home(){
                         </path>
                     </svg>
                     Search
-                </button>
+                </button> 
             </form>
             <style jsx>{`
+                :after, :before {
+                    box-sizing:border-box;
+                    border:0 solid #e5e7eb
+                }
                 .Home{
                     justify-content:center;
                     text-align: center;
                     height: 450px;
                     margin-top: 130px;
+                    content-align:
                 }
                 h1 {
                     margin: 80px 0px 40px 0px;
@@ -43,16 +48,16 @@ export default function Home(){
                 form {
                     margin-top: 60px;
                     height:70px;
-                    width:wrap;
-                    border: solid 0px;
-                    border-radius: 20px;
-                } 
+                    justify-content:auto;
+                }
                 input{
-                    width: 600px;
+                    width: 660px;
                     height: 100%;
                     border: solid 0px grey;
                     background: #f4f0ec;
                     padding-left: 20px;
+                    border-top-left-radius: 20px;
+                    border-bottom-left-radius: 20px;
                     font-size: 18px;
                 }
                 button{
@@ -61,6 +66,8 @@ export default function Home(){
                     width: 140px;
                     height: 100%;
                     border: solid 0px;
+                    border-top-right-radius: 20px;
+                    border-bottom-right-radius: 20px;
                     background-color:orange;
                     color:white;
                     font-weight: 500;
