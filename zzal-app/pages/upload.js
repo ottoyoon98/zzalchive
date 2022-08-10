@@ -4,19 +4,31 @@ export default function upload(){
     const pub = process.env.PUBLIC_URL || "";
     const [selectedImage, setSelectedImage] = useState();
     const imageName = useRef("선택된 파일 없음");
+    const genreList = [["만화","cartoon"], ["웹툰","webtoon"], ["그림","illust"],["예능","entertainment"], ["드라마","drama"],["영화","movie"]];
+    const [selectedColor, setSelectedColor] = useState(-1);
+    const [selectedGenre, setSelectedGenre] = useState(-1);
 
     const onChangeCaptureHandler = (e) => {
-        
         if (e.target.files && e.target.files.length > 0){
-            console.log(e.target.files[0].name);
             e.target.innerHTML = e.target.files[0].name;
             setSelectedImage(e.target.files[0]);
             imageName.current=e.target.files[0].name;
         }
     };
-    const onChange = (e) => {
-
-    }
+    const onClickGenre = (e) => {
+        genreList.forEach((item, index) => {
+            if (item[1] === e.target.id){
+                setSelectedGenre(index);
+            }
+        })
+    };
+    const onClickColor = (e) => {
+        if ("color" === e.target.id){
+            setSelectedColor(0);
+        } else if("grayscale" === e.target.id){
+            setSelectedColor(1);
+        }
+    };
     return (
         <div className="upload">
             
@@ -34,21 +46,28 @@ export default function upload(){
                     }
                 </div>
                 <form>
-                    <label>Upload your own zzal.</label>
-                    <br />
-                    <br />
-                    <input id="uploader" type="file" name="upfile[]" value=""  onChange={onChangeCaptureHandler} multiple/>
+                    <h4>Upload your own zzal.</h4>
+                    <input type="file" id="uploader" name="upfile[]" onChange={onChangeCaptureHandler} multiple/>
                     <label htmlFor="uploader" className="btn fileBtn">파일 선택</label>
                     <span id="fileName" >{imageName.current}</span>
                     
                     <br />
+                    <h4>Select zzal color tone.</h4>
+                    <input type="radio" name="zzal_color" className="radio" id="color" value="컬러"  onClick={onClickColor}/> <label className={"label" + (selectedColor===0?" selected":"")} htmlFor="color">컬러</label>
+                    <input type="radio" name="zzal_color" className="radio" id="grayscale" value="흑백"  onClick={onClickColor}/> <label className={"label" + (selectedColor===1?" selected":"")} htmlFor="grayscale">흑백</label>
                     <br />
-                    <label>Select zzal type.</label>
-                    <br />
-                    <br />
+                    <h4>Select zzal genre(type).</h4>
+                    <div className="genreWrapper">
+                        {genreList.map((item, index) => 
+                            <div key={item[0]}>
+                                <input type="radio" name="zzal_genre" className="radio" id={item[1]} value={item[0]} onClick={onClickGenre}/> 
+                                <label className={"label" + (index===selectedGenre?" selected":"")} htmlFor={item[1]}>{item[0]}</label>
+                            </div>
+                        )}
+                    </div>
                     {
                         selectedImage &&
-                        <div>`hi`
+                        <div>
                            
                         </div>
 
@@ -60,8 +79,7 @@ export default function upload(){
                     <br />
                     <br />
                     <label>Submit the zzal.</label>
-                    <input type="submit" forEncType="multipart/form-data"
-                            formMethod="POST" formAction="/api/upload" value="전송" />
+                    <input type="submit" formMethod="POST" formAction="/api/upload" value="전송" />
                 </form>
             </div>
             <style jsx>{`
@@ -94,6 +112,22 @@ export default function upload(){
                     margin: 5px 3px;
                     background: #f4f0ec;
                     radius: 5px;
+                }
+                .genreWrapper{
+                    display:flex;
+                }
+                .label{
+                    margin: 5px 3px;
+                    padding: 5px 5px;
+                    background: #f4f0ec;
+
+                    radius: 5px;
+                }
+                .radio{
+                    display: none;
+                }
+                .selected{
+                    border: solid 2px pink;
                 }
             `}</style>
         </div>
