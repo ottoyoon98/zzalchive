@@ -1,5 +1,15 @@
 import {useState, useRef} from "react";
 import Image from "next/image";
+import { WithContext as ReactTags } from 'react-tag-input';
+
+const KeyCodes = {
+    comma: 188,
+    enter: 13
+};
+  
+const delimiters = [KeyCodes.comma, KeyCodes.enter];
+
+
 export default function upload(){
     const pub = process.env.PUBLIC_URL || "";
     const [selectedImage, setSelectedImage] = useState();
@@ -7,12 +17,20 @@ export default function upload(){
     const genreList = [["만화","cartoon"], ["웹툰","webtoon"], ["그림","illust"],["예능","entertainment"], ["드라마","drama"],["영화","movie"]];
     const [selectedColor, setSelectedColor] = useState(-1);
     const [selectedGenre, setSelectedGenre] = useState(-1);
-
+    const suggestions = {};
+      
     const onChangeCaptureHandler = (e) => {
         if (e.target.files && e.target.files.length > 0){
             e.target.innerHTML = e.target.files[0].name;
             setSelectedImage(e.target.files[0]);
             imageName.current=e.target.files[0].name;
+        }
+    };
+    const onClickColor = (e) => {
+        if ("color" === e.target.id){
+            setSelectedColor(0);
+        } else if("grayscale" === e.target.id){
+            setSelectedColor(1);
         }
     };
     const onClickGenre = (e) => {
@@ -22,12 +40,22 @@ export default function upload(){
             }
         })
     };
-    const onClickColor = (e) => {
-        if ("color" === e.target.id){
-            setSelectedColor(0);
-        } else if("grayscale" === e.target.id){
-            setSelectedColor(1);
-        }
+    const [tags, setTags] = useState([]);
+    const handleDelete = i => {
+        setTags(tags.filter((tag, index) => index !== i));
+    };
+    const handleAddition = tag => {
+        setTags([...tags, tag]);
+    };
+    const handleDrag = (tag, currPos, newPos) => {
+        const newTags = tags.slice();
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+
+        setTags(newTags);
+    }
+    const handleTagClick = index => {
+        console.log('The tag at index ' + index + ' was clicked');
     };
     return (
         <div className="upload">
@@ -72,13 +100,22 @@ export default function upload(){
                         </div>
 
                     }
+                    <h3>Type keywords to describe the zzal.</h3>
                     <br />
-                    <label>Type keywords to describe the zzal.</label>
+
+                    <ReactTags 
+                        tags={tags}
+                        delimiters={delimiters}
+                        handleDelete={handleDelete}
+                        handleAddition={handleAddition}
+                        handleDrag={handleDrag}
+                        handleTagClick={handleTagClick}
+                        inputFieldPosition="bottom"
+                        autocomplete
+                    />
+
                     <br />
-                    <input type="text"></input>
-                    <br />
-                    <br />
-                    <label>Submit the zzal.</label>
+                    <h3>Submit the zzal.</h3>
                     <input type="submit" formMethod="POST" formAction="/api/upload" value="전송" />
                 </form>
             </div>
