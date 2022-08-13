@@ -37,7 +37,7 @@ export default function SearchForm({searching_query}){
             </button> 
             <style jsx>{`
                 label {
-                    width:1px;
+                    width:0px;
                     display:none;
                 }
                 form {
@@ -52,7 +52,7 @@ export default function SearchForm({searching_query}){
                     padding-left: 20px;
                     border-top-left-radius: 20px;
                     border-bottom-left-radius: 20px;
-                    font-size: 15px;
+                    font-size: 16px;
                     outline-color: orange;
                     outline-width: 0.5px;
                 }
@@ -75,6 +75,22 @@ export default function SearchForm({searching_query}){
                 }
                 input:foucs{
                     outline: none;
+                }
+                @media screen and (max-width: 600px){
+                    input{width: 350px;}
+                    button{width:100px;}
+                }
+                @media screen and (min-width: 600px) and (max-width: 720px){
+                    input{width: 400px;}
+                    button{width:120px;}
+                }
+                @media screen and (min-width: 720px) and (max-width: 1080px){
+                    input{width: 470px;}
+                    button{width:120px;}
+                }
+                @media screen and (min-width: 1080px){
+                    input{width:660px;}
+                    button{width:140px;}
                 }
             `}</style>
         </form>
