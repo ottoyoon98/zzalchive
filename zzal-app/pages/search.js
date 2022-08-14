@@ -4,8 +4,6 @@ import {useRouter} from 'next/router'
 
 export default function search(){
     const router = useRouter();
-    console.log(router);
-    console.log(router.query.search);
     return (
         <div className='search-page'>
             <SearchForm searching_query={router.query.search}/>

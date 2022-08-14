@@ -22,7 +22,7 @@ export default function SearchForm({searching_query}){
                 autoComplete="off"
                 name="search"
                 placeholder="Type some keywords for searching zzal."
-                value={query}
+                value={query!==undefined?query:""}
                 onChange={onChange} >
             </input>
             <button>
