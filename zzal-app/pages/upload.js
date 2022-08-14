@@ -74,18 +74,19 @@ export default function upload(){
                     }
                 </div>
                 <form>
-                    <h4>Upload your own zzal.</h4>
-                    <input type="file" id="uploader" name="upfile[]" onChange={onChangeCaptureHandler} multiple/>
-                    <label htmlFor="uploader" className="btn fileBtn">파일 선택</label>
-                    <span id="fileName" >{imageName.current}</span>
-                    
-                    <br />
-                    <h4>Select zzal color tone.</h4>
+                    <h3>업로드할 짤을 선택해 주세요.</h3>
+                    <div className="uploader-container">
+                        <input type="file" id="uploader" name="upfile[]" onChange={onChangeCaptureHandler} multiple/>
+                        <label htmlFor="uploader" className="btn fileBtn">파일 선택</label>
+                        <span className="fileName" >{imageName.current}</span>
+                    </div>
+
+                    <h3>색감은 어떤지 선택해 주세요.</h3>
                     <input type="radio" name="zzal_color" className="radio" id="color" value="컬러"  onClick={onClickColor}/> <label className={"label" + (selectedColor===0?" selected":"")} htmlFor="color">컬러</label>
                     <input type="radio" name="zzal_color" className="radio" id="grayscale" value="흑백"  onClick={onClickColor}/> <label className={"label" + (selectedColor===1?" selected":"")} htmlFor="grayscale">흑백</label>
-                    <br />
-                    <h4>Select zzal genre(type).</h4>
-                    <div className="genreWrapper">
+                    
+                    <h3>어울리는 장르를 골라주세요.</h3>
+                    <div className="genre-container">
                         {genreList.map((item, index) => 
                             <div key={item[0]}>
                                 <input type="radio" name="zzal_genre" className="radio" id={item[1]} value={item[0]} onClick={onClickGenre}/> 
@@ -100,8 +101,8 @@ export default function upload(){
                         </div>
 
                     }
-                    <h3>Type keywords to describe the zzal.</h3>
-                    <br />
+                    
+                    <h3>키워드로 짤을 설명해 주세요</h3>
 
                     <ReactTags 
                         tags={tags}
@@ -112,16 +113,18 @@ export default function upload(){
                         handleTagClick={handleTagClick}
                         inputFieldPosition="bottom"
                         autocomplete
+                        inline
                     />
-
                     <br />
-                    <h3>Submit the zzal.</h3>
-                    <input type="submit" formMethod="POST" formAction="/api/upload" value="전송" />
+                    <input className="submitBtn" type="submit" formMethod="POST" formAction="/api/upload" value="업로드하기!" />
                 </form>
             </div>
             <style jsx>{`
                 .upload{
-                    height:85vh;
+                    height:max(85vh, 700px);
+                }
+                h3{
+                    margin: 30px 0px 10px 0px;
                 }
                 .upload-wrapper{
                     justify-content: center;
@@ -138,33 +141,61 @@ export default function upload(){
                     width:40%;
                 }
                 img{
-                    max-width: 100%;
+                    max-width: 90%;
                     max-height: 600px;
+                }
+                .uploader-container{
+                    display: flex;
+                    justify-content: start;
+                    align-items: center;    
                 }
                 #uploader{
                     display:none;
                 }
                 .fileBtn{
-                    border: solid 3px pink;
-                    margin: 5px 3px;
-                    background: #f4f0ec;
-                    radius: 5px;
+                    width: 100px;
+                    padding: 5px 10px;
+                    margin: 5px 6px 5px 0px;
+                    background: #E9EAEC;
+                    border-radius: 10px;
+                    font-weight: 550;
+                    text-align: center;
+                    vertical-align: middle;
                 }
-                .genreWrapper{
+                .fileName{
+                    width: calc(100%-100px);
+                    overflow: hidden;
+                }
+                .genre-container{
                     display:flex;
+                    flex-wrap: wrap;
                 }
                 .label{
-                    margin: 5px 3px;
-                    padding: 5px 5px;
-                    background: #f4f0ec;
-
-                    radius: 5px;
+                    flex-basis: auto;
+                    width: auto;
+                    height: 40px;
+                    margin: 10px 6px 10px 0px;
+                    padding: 5px 10px;
+                    background: #E9EAEC;
+                    border-radius: 10px;
+                    line-height: 40px;
+                    font-weight: 550;
                 }
                 .radio{
                     display: none;
                 }
                 .selected{
-                    border: solid 2px pink;
+                    background: #F7CB2D;
+                }
+                .submitBtn{
+                    border: none;
+                    width: auto;
+                    margin: 10px 6px 10px 0px;
+                    padding: 5px 20px;
+                    background: #F7CB2D;
+                    border-radius: 10px;
+                    line-height: 40px;
+                    font-weight: 700;
                 }
             `}</style>
         </div>
