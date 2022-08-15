@@ -106,20 +106,20 @@ export default function upload(){
                    
                     {selectedGenre!==-1 ? (
                         <div className="keyword-container">
-                        <h3>키워드로 짤을 설명해 주세요</h3>
+                            <h3>키워드로 짤을 설명해 주세요</h3>
 
-                        <ReactTags 
-                            tags={tags}
-                            delimiters={delimiters}
-                            handleDelete={handleDelete}
-                            handleAddition={handleAddition}
-                            handleDrag={handleDrag}
-                            handleTagClick={handleTagClick}
-                            inputFieldPosition="bottom"
-                            autocomplete
-                            inline
-                        />
-                    </div>
+                            <ReactTags 
+                                tags={tags}
+                                delimiters={delimiters}
+                                handleDelete={handleDelete}
+                                handleAddition={handleAddition}
+                                handleDrag={handleDrag}
+                                handleTagClick={handleTagClick}
+                                inputFieldPosition="bottom"
+                                autocomplete
+                                inline
+                            />
+                        </div>
                     ):("")}
                     {tags.length > 3 ? (
                         <input className="submitBtn" type="submit" formMethod="POST" formAction="/api/upload" value="업로드하기!" />
@@ -140,14 +140,14 @@ export default function upload(){
                     padding: 40px 10px;
                 }
                 .imgWrapper{
-                    width:40%;
+                    width:35%;
                     height: 400px;
                     display:block;
                 }
                 form{
                     margin-left: 30px;
                     padding: 0px 20px 40px 20px;
-                    width:30%;
+                    width:40%;
                     background: #FCFCFC;
                     border-radius: 20px;
                     
@@ -179,11 +179,7 @@ export default function upload(){
                     width: calc(100%-120px);
                     overflow: hidden;
                 }
-                .color-radio-container{
-                    display:flex;
-                    flex-wrap: wrap;
-                }
-                .genre-radio-container{
+                .color-radio-container, .genre-radio-container{
                     display:flex;
                     flex-wrap: wrap;
                 }
@@ -220,6 +216,19 @@ export default function upload(){
                 }
                 .fileBtn :hover , .label :hover, .submitBtn :hover{
                     background: #F0C426;
+                }
+                .color-container, .genre-container, .keyword-container, .submitBtn{
+                    animation: smoothAppear 0.8s;
+                }
+                @keyframes smoothAppear{
+                    from {
+                        opacity: 0;
+                        transform: translateY(+20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
                 }
             `}</style>
         </div>

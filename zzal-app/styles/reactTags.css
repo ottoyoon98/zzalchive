@@ -19,7 +19,7 @@
 .ReactTags__tagInput {
     border-radius: 1px;
     display: inline-block;
-    width: min(100%, 500px);
+    width: 100%;
     
 }
 .ReactTags__tagInput input.ReactTags__tagInputField,
