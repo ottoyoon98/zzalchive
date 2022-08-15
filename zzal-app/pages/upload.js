@@ -81,42 +81,50 @@ export default function upload(){
                         <span className="fileName" >{imageName.current}</span>
                     </div>
 
-                    <h3>색감은 어떤지 선택해 주세요.</h3>
-                    <input type="radio" name="zzal_color" className="radio" id="color" value="컬러"  onClick={onClickColor}/> <label className={"label" + (selectedColor===0?" selected":"")} htmlFor="color">컬러</label>
-                    <input type="radio" name="zzal_color" className="radio" id="grayscale" value="흑백"  onClick={onClickColor}/> <label className={"label" + (selectedColor===1?" selected":"")} htmlFor="grayscale">흑백</label>
-                    
-                    <h3>어울리는 장르를 골라주세요.</h3>
-                    <div className="genre-container">
-                        {genreList.map((item, index) => 
-                            <div key={item[0]}>
-                                <input type="radio" name="zzal_genre" className="radio" id={item[1]} value={item[0]} onClick={onClickGenre}/> 
-                                <label className={"label" + (index===selectedGenre?" selected":"")} htmlFor={item[1]}>{item[0]}</label>
+                    {selectedImage ? (
+                        <div className="color-container">
+                            <h3>색감은 어떤지 선택해 주세요.</h3>
+                            <div className="color-radio-container">
+                                <div><input type="radio" name="zzal_color" className="radio" id="color" value="컬러"  onClick={onClickColor}/> <label className={"label" + (selectedColor===0?" selected":"")} htmlFor="color">컬러</label></div>
+                                <div><input type="radio" name="zzal_color" className="radio" id="grayscale" value="흑백"  onClick={onClickColor}/> <label className={"label" + (selectedColor===1?" selected":"")} htmlFor="grayscale">흑백</label></div>
                             </div>
-                        )}
-                    </div>
-                    {
-                        selectedImage &&
-                        <div>
-                           
                         </div>
+                    ) : ("")}
+                    {selectedColor!==-1 ? (
+                        <div className="genre-container">
+                            <h3>어울리는 장르를 골라주세요.</h3>
+                            <div className="genre-radio-container">
+                                {genreList.map((item, index) => 
+                                    <div key={item[0]}>
+                                        <input type="radio" name="zzal_genre" className="radio" id={item[1]} value={item[0]} onClick={onClickGenre}/> 
+                                        <label className={"label" + (index===selectedGenre?" selected":"")} htmlFor={item[1]}>{item[0]}</label>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ):("")}
+                   
+                    {selectedGenre!==-1 ? (
+                        <div className="keyword-container">
+                        <h3>키워드로 짤을 설명해 주세요</h3>
 
-                    }
+                        <ReactTags 
+                            tags={tags}
+                            delimiters={delimiters}
+                            handleDelete={handleDelete}
+                            handleAddition={handleAddition}
+                            handleDrag={handleDrag}
+                            handleTagClick={handleTagClick}
+                            inputFieldPosition="bottom"
+                            autocomplete
+                            inline
+                        />
+                    </div>
+                    ):("")}
+                    {tags.length > 3 ? (
+                        <input className="submitBtn" type="submit" formMethod="POST" formAction="/api/upload" value="업로드하기!" />
+                    ) : ("")}
                     
-                    <h3>키워드로 짤을 설명해 주세요</h3>
-
-                    <ReactTags 
-                        tags={tags}
-                        delimiters={delimiters}
-                        handleDelete={handleDelete}
-                        handleAddition={handleAddition}
-                        handleDrag={handleDrag}
-                        handleTagClick={handleTagClick}
-                        inputFieldPosition="bottom"
-                        autocomplete
-                        inline
-                    />
-                    <br />
-                    <input className="submitBtn" type="submit" formMethod="POST" formAction="/api/upload" value="업로드하기!" />
                 </form>
             </div>
             <style jsx>{`
@@ -138,7 +146,11 @@ export default function upload(){
                 }
                 form{
                     margin-left: 30px;
-                    width:40%;
+                    padding: 0px 20px 40px 20px;
+                    width:30%;
+                    background: #FCFCFC;
+                    border-radius: 20px;
+                    
                 }
                 img{
                     max-width: 90%;
@@ -161,12 +173,17 @@ export default function upload(){
                     font-weight: 550;
                     text-align: center;
                     vertical-align: middle;
+                    cursor: pointer;
                 }
                 .fileName{
-                    width: calc(100%-100px);
+                    width: calc(100%-120px);
                     overflow: hidden;
                 }
-                .genre-container{
+                .color-radio-container{
+                    display:flex;
+                    flex-wrap: wrap;
+                }
+                .genre-radio-container{
                     display:flex;
                     flex-wrap: wrap;
                 }
@@ -180,6 +197,9 @@ export default function upload(){
                     border-radius: 10px;
                     line-height: 40px;
                     font-weight: 550;
+                    text-align: center;
+                    vertical-align: middle;
+                    cursor: pointer;
                 }
                 .radio{
                     display: none;
@@ -189,13 +209,17 @@ export default function upload(){
                 }
                 .submitBtn{
                     border: none;
-                    width: auto;
-                    margin: 10px 6px 10px 0px;
+                    width: 100%;
+                    margin: 30px 6px 10px 0px;
                     padding: 5px 20px;
                     background: #F7CB2D;
                     border-radius: 10px;
                     line-height: 40px;
                     font-weight: 700;
+                    cursor: pointer;
+                }
+                .fileBtn :hover , .label :hover, .submitBtn :hover{
+                    background: #F0C426;
                 }
             `}</style>
         </div>
