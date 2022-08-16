@@ -1,7 +1,7 @@
-.container {
-    margin: auto;
-    width: 50%;
+.react-tags-wrapper{
+    width:100%;
 }
+
 .ReactTags__tags {
     position: relative;
 }
@@ -32,6 +32,23 @@
     border-radius: 10px;
     min-width: 150px;
 }
+
+.ReactTags__tagInput input.tagSearchField,
+.ReactTags__tagInput input.tagSearchField:focus {
+    height: 70px;
+    width: 100%;
+    margin: 0;
+    min-width: 150px;
+
+    border: solid 0px grey;
+    background: #f4f0ec;
+    padding-left: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    font-size: 16px;
+    outline-color: orange;
+    outline-width: 0.5px;
+}
   
 .ReactTags__editInput {
     border-radius: 2px;
@@ -43,7 +60,7 @@
   
   /* Styles for selected tags */
 .ReactTags__selected span.ReactTags__tag {
-    background: #F7CB2D;
+    background: rgb(255, 186, 59);
     color: black;
     font-size: 16px;
     font-weight: 550;
