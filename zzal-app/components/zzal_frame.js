@@ -31,11 +31,11 @@ export function Item({id, keywords, imgUrl}){
         <div className='zzal'>
             <img src={imgUrl} width={"100%"} onClick={() =>onClickItem(id, keywords, imgUrl)}/>
             <div className='keywords'>
-                {keywords.map((item) => <button onClick={() => onClickKeyword(item)}> {item} </button>)}
+                {keywords.map((item, idx) => <button onClick={() => onClickKeyword(item)} key={idx}> {item} </button>)}
             </div>
             <style jsx>{`
                 .zzal{
-                    margin: 50px 0px;
+                    margin: 0px 0px 50px 0px;
                     position: relative;
                 }
                 .keywords{
@@ -111,28 +111,55 @@ export default function zzal_frame(){
     }, []);
     
     return (
-        <div className="zzals">
-            {[0, 1, 2, 3].slice(0, verticals).map((idx)=>
-                <div className='vertical' key={idx}>
-                    { results.filter(function(value, index) {
-                        return (index % verticals)===idx?value:null;
-                    }).map((item) => <Item id={item.id} keywords={item.keywords} imgUrl={item.imgURL} key={item.id}/>)}
-                </div>
-            )}
+        <div className="zzals-container">
+            <div className="resultInfo">
+                <h3> 검색결과: {results.length}개</h3>
+            </div>
+            <div className="zzals">
+                {[0, 1, 2, 3].slice(0, verticals).map((idx)=>
+                    <div className='vertical' key={idx}>
+                        { results.filter(function(value, index) {
+                            return (index % verticals)===idx?value:null;
+                        }).map((item) => <Item id={item.id} keywords={item.keywords} imgUrl={item.imgURL} key={item.id}/>)}
+                    </div>
+                )}
+                
+            </div>
             <style jsx>{`
-               .zzals{
-                    margin-top: 30px;
-                    justify-content:space-between; 
-                    vertical-align: top;
-                    display:inline-block;
-                }
-                .vertical{
-                    display:inline-block;
-                    width:310px;
-                    vertical-align: top;
-                    margin: 20px;
-                }
-            `}</style>
+                    .zzals-container{
+                        margin-top: 30px;
+                        justify-content:center;
+                    }
+                    .resultInfo{
+                        margin: auto;
+                        text-align:left;
+                    }
+                    .resultInfo > h3{
+                        margin: 0;
+                    }
+                    .zzals{
+                        margin-top: 10px;
+                        justify-content:space-between; 
+                        vertical-align: top;
+                        display:inline-block;
+                    }
+                    .vertical{
+                        display:inline-block;
+                        width:310px;
+                        vertical-align: top;
+                        margin: 20px;
+                    }
+                    @media screen and (max-width: 720px){
+                        .resultInfo{  width:300px; }
+                    }
+                    @media screen and (min-width: 720px) and (max-width: 1080px){
+                        .resultInfo{  width:600px; }
+                    }
+                    @media screen and (min-width: 1080px){
+                        .resultInfo{  width:900px; }
+                    }
+
+                `}</style>
         </div>
     )
 

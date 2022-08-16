@@ -2,8 +2,8 @@ import SearchForm from '../components/search_form'
 export default function Home(){
     return (
         <div className="Home">
-            <h1>Find the zzal</h1>
-            <h3> Get your finding zzal by some keywords.</h3>
+            <h1> Find the zzal</h1>
+            <h3> 기억이 날 듯 말 듯한 짤, 키워드로 찾아보세요. </h3>
             <SearchForm searching_query={""}/>
             <style jsx>{`
                 .Home{

@@ -14,15 +14,16 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 export default function SearchForm({searching_query}){
     const router = useRouter()
+    const [tags, setTags] = useState(searching_query || []);
+    
     const onSubmit = ((event) => {
         event.preventDefault();
         router.push({
             pathname: "/search",
-            query: {search: tags},
-        });
+            query: {search: [tags.map((item) => item.text)].toString()},
+        },'/search');
     })
 
-    const [tags, setTags] = useState([]);
     const suggestionList = ["컬러", "흑백", "움짤","최고심", "드라마", "영화", "만화", "웹툰"]
     const suggestions = suggestionList.map(country => {
         return {
@@ -84,14 +85,14 @@ export default function SearchForm({searching_query}){
                     display:none;
                 }
                 form {
-                    height:70px;
+                    height:150px;
                     justify-content:auto;
                 }
                 .search-container{
                     display:flex;
                     justify-content:center;
                     align-items:start;
-                    margin: auto;
+                    margin: 60px auto;
                 }
                 .searchBtn{
                     content: center;

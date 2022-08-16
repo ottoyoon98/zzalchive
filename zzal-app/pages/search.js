@@ -4,16 +4,18 @@ import {useRouter} from 'next/router'
 
 export default function search(){
     const router = useRouter();
+    console.log(router.query.search);
+    const search = (router.query.search.split(',')).map((item)=>{return {id:item, text:item}});
     return (
         <div className='search-page'>
-            <SearchForm searching_query={router.query.search}/>
+            <SearchForm searching_query={search}/>
             <Zzals verticals={2}/>
             <style jsx>{`
                 .search-page{
                     justify-content:center;
                     text-align: center;
                     min-height: 75vh;
-                    margin-top: 130px;
+                    margin-top: 30px;
                 }
             `}</style>
         </div>
